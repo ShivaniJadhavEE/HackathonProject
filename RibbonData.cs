@@ -203,6 +203,8 @@ namespace HackathonProject
                 DownloadCSV(commitData, objectListcommit, dateTimeData,filePath1);
             }
 
+            MessageBox.Show($"Files are created at paths: {filePath2} and {filePath1}", "Files downloaded", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
         }
 
         public List<List<object>> GetFinalData(List<List<object>> valuesAfterChange, List<List<object>> ToList, string flag,int index)
@@ -210,25 +212,39 @@ namespace HackathonProject
             List<object>temp= new List<object>();
           
             if (flag!=null&& !flag.Equals("ECO")) {
-
-                for (int i = 1; i < valuesAfterChange.Count; i++)
+            if(flag.Equals("MRN"))
                 {
-                    for (int j = 2; j < valuesAfterChange[i].Count; j++)
+                    for (int i = 1; i < valuesAfterChange.Count; i++)
                     {
-                        if(i==index)
+                        for (int j = 2; j < valuesAfterChange[i].Count; j++)
                         {
-                            object a = valuesAfterChange[i][j];
-                            object b = Globals.ThisAddIn.valuesBeforeChange[i][j];
-                            if (valuesAfterChange[i][j].Equals(Globals.ThisAddIn.valuesBeforeChange[i][j]))
+                            if (i == index)
                             {
-
-                                valuesAfterChange[i][j] = -1;
+                                  valuesAfterChange[i][j] = 1;
+                               
+                                temp.Add(valuesAfterChange[i][j]);
                             }
-                            temp.Add(valuesAfterChange[i][j]);
+
                         }
-                       
                     }
                 }
+                else
+                {
+                    for (int i = 1; i < valuesAfterChange.Count; i++)
+                    {
+                        for (int j = 2; j < valuesAfterChange[i].Count; j++)
+                        {
+                            if (i == index)
+                            {
+                                    temp.Add(valuesAfterChange[i][j]);
+                                
+                            }
+
+                        }
+                    }
+                }
+
+               
                 ToList.Add(temp);
             }
             else
@@ -242,9 +258,7 @@ namespace HackathonProject
                             valuesAfterChange[i][j] = -1;
                             temp.Add(valuesAfterChange[i][j]);
 
-                        }
-                       
-                           
+                        }                          
                        
                     }
                 }
@@ -296,7 +310,7 @@ namespace HackathonProject
                 finalDataCSV[i].Insert(0, dateTimeData[i-1]);
             }
            
-            using (StreamWriter sw = new StreamWriter(outputPath))
+            using (StreamWriter sw = new StreamWriter(outputPath,false))
             {
                 // Write data to the CSV file
                 foreach (List<object> row in finalDataCSV)

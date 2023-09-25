@@ -56,7 +56,7 @@
             // 
             // button1
             // 
-            this.button1.Label = "Generate Value";
+            this.button1.Label = "Generate Files";
             this.button1.Name = "button1";
             this.button1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button1_Click);
             // 
